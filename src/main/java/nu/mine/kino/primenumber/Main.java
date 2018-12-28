@@ -12,6 +12,10 @@
 
 package nu.mine.kino.primenumber;
 
+import nu.mine.kino.primenumber.strategy.FastPrimeStrategy;
+import nu.mine.kino.primenumber.strategy.PrimeStrategy;
+import nu.mine.kino.primenumber.strategy.SlowPrimeStrategy;
+
 /**
  * @author Masatomi KINO
  * @version $Revision$
@@ -23,8 +27,33 @@ public class Main {
         // ”‚¦‚Ä•Ô‹p‚·‚éB
         // ‚Á‚Ä‘èŞ‚Å‚·B
 
-        int target = 13;  // —á
+        int target = 100000; // —á
+        PrimeStrategy[] strategies = new PrimeStrategy[] {
+                new SlowPrimeStrategy(), new FastPrimeStrategy() };
 
+        // SlowPrimeStrategy strategy = new SlowPrimeStrategy();
+        // FastPrimeStrategy strategy = new FastPrimeStrategy();
+
+        for (PrimeStrategy strategy : strategies) {
+            execute(target, strategy);
+        }
+
+    }
+
+    private static void execute(int target, PrimeStrategy strategy) {
+        long start = System.currentTimeMillis();
+        int counter = 0;
+        for (int i = 1; i <= target; i++) {
+            boolean primeFlag = strategy.isPrime(i);
+            if (primeFlag) {
+                // System.out.println(i + ": ‘f”");
+                counter++;
+            } else {
+                // System.out.println(i + ": ‘f”‚¶‚á‚È‚¢");
+            }
+        }
+        System.out.println(target + "ˆÈ‰º‚Ì‘f”‚Ì”:" + counter);
+        System.out.println(System.currentTimeMillis() - start);
     }
 
 }
